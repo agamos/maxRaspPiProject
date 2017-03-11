@@ -7,7 +7,7 @@
 <body>
       <h2>Received Packet: <span id="packet"></span></h2>
       <h2>Received Data  : <span id="rxData"></span></h2>
-      <h3>Count  : <span id="count"></span></h3>
+      <h3>Counter  : <span id="count"></span></h3>
       <script>
          var socket = io();
          socket.on('packet',function(data){ packet.innerHTML = data.number });
