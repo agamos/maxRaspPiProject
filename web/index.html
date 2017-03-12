@@ -3,20 +3,19 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="white">
     <title>MxStation</title>
     <link href="css/3rdParty/bootstrap.min.css" rel="stylesheet">
     <script src="/socket.io/socket.io.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
-    <script src="js/weather.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
+	<script src="js/weather.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
     <link href="css/3rdParty/grid.css" rel="stylesheet">
     <link href="css/theme.css" rel="stylesheet">
 </head>
 <body>
-        <!-- Define alerts for top of web page -->
 	<div class="alert alert-danger" id="alert" role="alert" style="display:none;">
 		<h4 class="alert-heading">Attention!</h4>
 		<p>Immediate action required - a possible fall has occurred</p>
@@ -24,8 +23,6 @@
 	<div class="alert alert-success" id="heading" role="alert">
 		<strong>MxStation.</strong> Monitoring your everyday health and safety.
 	</div>
-
-        <!-- Define graphical warning pulsing radar effect -->
 	<svg id="fall" style="visibility: hidden;">
 	  <circle cx="50%" cy="50%" r="0" fill-opacity="0" stroke="red" stroke-width="32px" stroke-opacity="0.4">
 	    <animate attributeName="r" from="0" to="1220" dur="6s" repeatCount="indefinite" begin="0.25s" />
@@ -47,34 +44,37 @@
 	    <animate attributeName="r" from="0" to="1220" dur="6s" repeatCount="indefinite" begin="4.25s" />
 	  </circle>
 	</svg>   
-
-        <!-- Define outputs for temperature readings -->
-        <div class="container clear-top">
+    <div class="container clear-top">
+        <br>
+        <div class="row">
 	        <div class='col-sm-6'>
-	        	<h2>Outside temperature <span id="outside"></span></h2>
-	        </div>
-	        <div class='col-sm-6'>
-	        	<h2>Pendant temperature <span id="temperature"></span></h2>
+	        	<button type="button" class="btn btn-primary btn-xxl">Outside temperature  <span id="outside" class="badge badge-pill badge-pill-xxl"></span></button>
 	        </div>
         </div>
-
-         <!-- Script to handle emitters from Node.js --> 
+        <br>
+        <div class="row">
+	        <div class='col-sm-6'>
+	        	<button type="button" class="btn btn-primary btn-xxl">Pendant temperature  <span id="temperature" class="badge badge-pill badge-pill-xxl"></span></button>
+	        </div>
+        </div>
          <script>
-           var socket = io();
-           socket.on('value',function(data){ rxData.innerHTML = data.number });
-           socket.on('temperature',function(data){ temperature.innerHTML = data.number });
-           socket.on('fall',function(data){ fall.style.visibility = 'visible'; $('#heading').hide(); $('#alert').show(); });
-           socket.on('button',function(data){ fall.style.visibility = 'hidden'; $('#alert').hide(); $('#heading').show(); });
+         var socket = io();
+         socket.on('value',function(data){ rxData.innerHTML = data.number });
+         socket.on('temperature',function(data){ temperature.innerHTML = data.number + "&deg;C" });
+         socket.on('fall',function(data){ fall.style.visibility = 'visible'; $('#heading').hide(); $('#alert').show(); });
+         socket.on('button',function(data){ fall.style.visibility = 'hidden'; $('#alert').hide(); $('#heading').show(); });
          </script>
          
       </div>
     </div>
 
-     <!-- Bootstrap core JavaScript -->
+          <!-- Bootstrap core JavaScript
+    ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="js/3rdParty/bootstrap.min.js"></script
     <script src="js/3rdParty/docs.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/3rdParty/ie10-viewport-bug-workaround.js"></script>
-</body>
+
+      </body>

@@ -3,6 +3,8 @@ body {
   color: green;
   padding-top: 10px;
   padding-bottom: 30px;
+  font-family: 'Roboto';
+  font-size: 24px;
 }
 
 .theme-dropdown .dropdown-menu {
@@ -27,4 +29,29 @@ svg {
   top: 0; bottom: 0;
   left: 0;
   right:0;
+}
+
+.btn-yellow {
+  background: rgb(250, 255, 140);
+  color: #574500;
+  border: none;
+  -moz-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important; /* !important tags aren't necessarily always bad */
+}
+.btn-yellow:hover, .btn-yellow:focus {
+  background: rgb(252, 255, 179);
+}
+.btn-yellow:active {
+  background: rgb(247, 255, 71);
+}
+.btn-xxl {
+  padding: 20px 26px;
+  font-size: 35px;
+  border-radius: 8px;
+}
+.badge-pill-xxl {
+  padding: 20px 26px;
+  font-size: 24px;
+  border-radius: 48px;
 }
