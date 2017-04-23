@@ -1,10 +1,20 @@
 body {
+  overflow: hidden;
   background-color: black;
   color: green;
   padding-top: 10px;
   padding-bottom: 30px;
   font-family: 'Roboto';
-  font-size: 24px;
+  font-size: 28px;
+}
+
+h2 {
+  color: white;
+  font-size: 48px;
+}
+h3 {
+  color: white;
+  font-size: 36px;
 }
 
 .theme-dropdown .dropdown-menu {
@@ -50,6 +60,7 @@ svg {
   font-size: 35px;
   border-radius: 8px;
 }
+
 .badge-pill-xxl {
   padding: 20px 26px;
   font-size: 24px;
