@@ -6,6 +6,15 @@ var express = require('express'),
     fs = require('fs'),
     path = require('path');
 
+// IFTTT configuration
+
+var apiKey = 'bCLzK64j0V9sF0Y4pUCfCU';
+var IFTTTMaker = require('iftttmaker')(apiKey);
+
+// Flag to stop repeated triggers being sent to IFTTT
+
+var triggered = false;
+
 // Create web server running on port 80
 
 var server = http.createServer(function(req,res) {
@@ -93,24 +102,58 @@ io.sockets.on('connection', function(socket){
    
     // Temperature sensor readings
     if(frame.data[0]==84) { // Temperature
-      var temp = frame.data[1]+(frame.data[2]/10);
+      var temp = (frame.data[1]+(frame.data[2]/10))/10;
       socket.emit('temperature', {number: temp});
       socket.broadcast.emit('temperature', {number: temp});
     }
    
     // Accelerometer sensor readings
-    if(frame.data[0]==70) { // Fall
+    if(frame.data[0]==70 && !triggered) { // Fall
+      triggered=true;
       socket.emit('fall', {number: frame.data[1]});
       socket.broadcast.emit('fall', {number: frame.data[1]});
+
+      // Play sound
+
       alarm.play();
+      
+      // Alert IFTTT
+
+      IFTTTMaker.send('Patient_fallen').then(function () {
+         console.log('Request was sent');
+      }).catch(function (error) {
+         console.log('The request could not be sent:', error);
+      });
     }
 
     // Button push readings
     if(frame.data[0]==66) { // Button
       socket.emit('button', {number: frame.data[1]});
       socket.broadcast.emit('button', {number: frame.data[1]});
+      triggered=false;
     }
   });
+  
+  //  Stop alarm and notify clients when triggered by web page
+
+  socket.on('cancelAlarm', function(data) {
+      console.log('got cancelAlarm event');
+      var dummy = 0;
+      triggered=false;
+      socket.emit('button', {number: dummy});
+      socket.broadcast.emit('button', {number: dummy});
+  });
+
+  // Test service to invoke alarm when pendant not around
+
+  socket.on('invokeAlarm', function(data) {
+      console.log('got invokeAlarm event');
+      var dummy = 0;
+      triggered=true;
+      socket.emit('fall', {number: dummy});
+      socket.broadcast.emit('fall', {number: dummy});
+  });
+ 
 });
 
 console.log('Server is running');
